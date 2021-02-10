@@ -12,6 +12,6 @@ public class AwsXRayConfig {
 
   @Bean
   public Filter TracingFilter() {
-    return new AWSXRayServletFilter("micro1-app");
+    return new AWSXRayServletFilter("micro2-app");
   }
 }
