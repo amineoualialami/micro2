@@ -1,0 +1,56 @@
+{
+  "family": "micro2",
+  "executionRoleArn": "arn:aws:iam::326646175787:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::326646175787:role/xray-daemon-write",
+  "containerDefinitions": [
+    {
+      "name": "xray-daemon",
+      "image": "amazon/aws-xray-daemon",
+      "cpu": 32,
+      "memoryReservation": 256,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/dcdojo",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 2000,
+          "containerPort": 2000,
+          "protocol": "udp"
+        }
+      ]
+    },
+    {
+      "name": "micro2-container",
+      "image": "326646175787.dkr.ecr.us-east-2.amazonaws.com/micro2:4655390a2d95f72f5f379cb62618a305641987ba",
+      "cpu": 512,
+      "portMappings": [
+        {
+          "hostPort": 8888,
+          "protocol": "tcp",
+          "containerPort": 8888
+        }
+      ],
+      "memory": 1024,
+      "essential": true,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/dcdojo",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "1024",
+  "memory": "2048"
+}
